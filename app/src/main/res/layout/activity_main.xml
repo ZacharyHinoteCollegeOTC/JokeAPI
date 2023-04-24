@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="#414af4"
-        android:text="Click Here To Send HTTP Request To Server And See Response Displayed As Toast"
+        android:text="@string/button"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

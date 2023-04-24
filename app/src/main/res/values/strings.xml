@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Volley</string>
+    <string name="button">Generate Random Joke</string>
 </resources>

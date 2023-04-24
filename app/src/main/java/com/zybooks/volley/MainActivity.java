@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private JsonObjectRequest jsonObjectRequest;
     //private StringRequest mStringRequest;
     //private String url = "https://icanhazdadjoke.com/";
-    private String url = "https://v2.jokeapi.dev/joke/Any";
+    private String url = "https://v2.jokeapi.dev/joke/Programming,Miscellaneous,Pun,Spooky,Christmas";
     private TextView view;
 
 

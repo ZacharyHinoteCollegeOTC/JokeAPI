@@ -42,10 +42,16 @@ public class MainActivity extends AppCompatActivity {
 
     private RequestQueue requestQueue;
     private JsonObjectRequest jsonObjectRequest;
-    //private StringRequest mStringRequest;
-    //private String url = "https://icanhazdadjoke.com/";
+
+    //private String url = "https://icanhazdadjoke.com/"; - This needed special changes to work, so we shifted to another API.
     private String url = "https://v2.jokeapi.dev/joke/Programming,Miscellaneous,Pun,Spooky,Christmas";
+    /*This specifies those categories because the general random joke generator had dark jokes like "What's the difference between
+    Harry Potter and the Jews? Harry escaped the chamber.*/
+
     private TextView view;
+
+    private String setup;
+    private String punchline;
 
 
 
@@ -60,13 +66,7 @@ public class MainActivity extends AppCompatActivity {
         btnRequest = (Button) findViewById(R.id.buttonRequest);
 
         view = (TextView)findViewById(R.id.textView);
-        /*// Instantiate the cache
-        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
 
-        // Set up the network to use HttpURLConnection as the HTTP client.
-        Network network = new BasicNetwork(new HurlStack());
-        requestQueue = new RequestQueue(cache, network);
-        requestQueue.start();*/
 
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,19 +93,19 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue.start();
 
-        //requestQueue = Volley.newRequestQueue(MainActivity.this);
-        //requestQueue = MySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    //view.setText(response.getString("joke"));
-                    view.setText(response.getString("setup") + " " + response.getString("delivery"));
+                    setup = response.getString("setup");
+                    punchline = response.getString("punchline");
+                    view.setText(setup);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                //view.setText(response.toString());
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -116,63 +116,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         requestQueue.add(jsonObjectRequest);
-        //MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+
     }
 
 
 }
 
 
-/*class MySingleton {
-    private static MySingleton instance;
-    private RequestQueue requestQueue;
-    private ImageLoader imageLoader;
-    private static Context ctx;
-
-    private MySingleton(Context context) {
-        ctx = context;
-        requestQueue = getRequestQueue();
-
-        imageLoader = new ImageLoader(requestQueue,
-                new ImageLoader.ImageCache() {
-                    private final LruCache<String, Bitmap>
-                            cache = new LruCache<String, Bitmap>(20);
-
-                    @Override
-                    public Bitmap getBitmap(String url) {
-                        return cache.get(url);
-                    }
-
-                    @Override
-                    public void putBitmap(String url, Bitmap bitmap) {
-                        cache.put(url, bitmap);
-                    }
-                });
-    }
-
-    public static synchronized MySingleton getInstance(Context context) {
-        if (instance == null) {
-            instance = new MySingleton(context);
-        }
-        return instance;
-    }
-
-    public RequestQueue getRequestQueue() {
-        if (requestQueue == null) {
-            // getApplicationContext() is key, it keeps you from leaking the
-            // Activity or BroadcastReceiver if someone passes one in.
-            requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());
-        }
-        return requestQueue;
-    }
-
-    public <T> void addToRequestQueue(Request<T> req) {
-        getRequestQueue().add(req);
-    }
-
-    public ImageLoader getImageLoader() {
-        return imageLoader;
-    }
-
-}
-*/

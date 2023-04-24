@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Volley</string>
     <string name="button">Generate Random Joke</string>
+    <string name="punchline">Get Punchline</string>
 </resources>
